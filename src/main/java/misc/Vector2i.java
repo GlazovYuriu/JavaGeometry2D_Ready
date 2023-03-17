@@ -28,6 +28,17 @@ public class Vector2i {
         this.x = x;
         this.y = y;
     }
+    /**
+     * Умножение вектора на число
+     *
+     * @param v вектор
+     * @param s число
+     * @return результат умножения
+     */
+    public static Vector2i mult(Vector2i v, int s) {
+        return new Vector2i(v.x * s, v.y * s);
+    }
+
 
     /**
      * Конструктор вектора от события

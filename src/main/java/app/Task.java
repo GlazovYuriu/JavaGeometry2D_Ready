@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.github.humbleui.jwm.MouseButton;
 import io.github.humbleui.skija.*;
-import misc.CoordinateSystem2d;
-import misc.CoordinateSystem2i;
-import misc.Vector2d;
-import misc.Vector2i;
+import misc.*;
 import panels.PanelLog;
 
 import java.util.ArrayList;
@@ -125,6 +122,30 @@ public class Task {
                 // рисуем точку
                 canvas.drawRect(Rect.makeXYWH(windowPos.x - POINT_SIZE, windowPos.y - POINT_SIZE, POINT_SIZE * 2, POINT_SIZE * 2), paint);
             }
+
+            // задаём красный цвет
+            paint.setColor(Misc.getColor(200, 0,255, 200));
+            // опорные точки линии
+            Vector2i pointA = new Vector2i(200, 200);
+            Vector2i pointB = new Vector2i(300, 400);
+            // вектор, ведущий из точки A в точку B
+            Vector2i delta = Vector2i.subtract(pointA, pointB);
+            // получаем максимальную длину отрезка на экране, как длину диагонали экрана
+            int maxDistance = (int) windowCS.getSize().length();
+            // получаем новые точки для рисования, которые гарантируют, что линия
+            // будет нарисована до границ экрана
+            Vector2i renderPointA = Vector2i.sum(pointA, Vector2i.mult(delta, maxDistance));
+            Vector2i renderPointB = Vector2i.sum(pointA, Vector2i.mult(delta, -maxDistance));
+            // рисуем линию
+            canvas.drawLine(renderPointA.x, renderPointA.y, renderPointB.x, renderPointB.y, paint);
+
+
+            // задаём красный цвет
+            paint.setColor(Misc.getColor(200, 255, 0, 0));
+            // рисуем исходные точки
+            canvas.drawRRect(RRect.makeXYWH(pointA.x - 4, pointA.y - 4, 8, 8, 4), paint);
+            canvas.drawRRect(RRect.makeXYWH(pointB.x - 4, pointB.y - 4, 8, 8, 4), paint);
+
         }
         canvas.restore();
     }
