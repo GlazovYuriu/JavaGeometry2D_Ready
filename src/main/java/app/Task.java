@@ -30,7 +30,7 @@ public class Task {
 
 
     /**
-     *  коэффициент колёсика мыши
+     * коэффициент колёсика мыши
      */
     private static final float WHEEL_SENSITIVE = 0.001f;
 
@@ -124,7 +124,7 @@ public class Task {
             }
 
             // задаём красный цвет
-            paint.setColor(Misc.getColor(200, 0,255, 200));
+            paint.setColor(Misc.getColor(200, 0, 255, 200));
             // опорные точки линии
             Vector2i pointA = new Vector2i(200, 200);
             Vector2i pointB = new Vector2i(300, 400);
@@ -153,12 +153,11 @@ public class Task {
     /**
      * Добавить точку
      *
-     * @param pos      положение
-     * @param pointSet множество
+     * @param pos положение
      */
-    public void addPoint(Vector2d pos, Point.PointSet pointSet) {
+    public void addPoint(Vector2d pos) {
         solved = false;
-        Point newPoint = new Point(pos, pointSet);
+        Point newPoint = new Point(pos);
         points.add(newPoint);
         PanelLog.info("точка " + newPoint + " добавлена в " + newPoint.getSetName());
     }
@@ -176,10 +175,10 @@ public class Task {
         Vector2d taskPos = ownCS.getCoords(pos, lastWindowCS);
         // если левая кнопка мыши, добавляем в первое множество
         if (mouseButton.equals(MouseButton.PRIMARY)) {
-            addPoint(taskPos, Point.PointSet.FIRST_SET);
+            addPoint(taskPos);
             // если правая, то во второе
         } else if (mouseButton.equals(MouseButton.SECONDARY)) {
-            addPoint(taskPos, Point.PointSet.SECOND_SET);
+            addPoint(taskPos);
         }
     }
 
@@ -197,9 +196,9 @@ public class Task {
             Vector2d pos = ownCS.getCoords(gridPos, addGrid);
             // сработает примерно в половине случаев
             if (ThreadLocalRandom.current().nextBoolean())
-                addPoint(pos, Point.PointSet.FIRST_SET);
+                addPoint(pos);
             else
-                addPoint(pos, Point.PointSet.SECOND_SET);
+                addPoint(pos);
         }
     }
 
@@ -260,25 +259,27 @@ public class Task {
         single.clear();
 
         // перебираем пары точек
-        for (int i = 0; i < points.size(); i++) {
-            for (int j = i + 1; j < points.size(); j++) {
-                // сохраняем точки
-                Point a = points.get(i);
-                Point b = points.get(j);
-                // если точки совпадают по положению
-                if (a.pos.equals(b.pos) && !a.pointSet.equals(b.pointSet)) {
-                    if (!crossed.contains(a)) {
-                        crossed.add(a);
-                        crossed.add(b);
-                    }
-                }
-            }
-        }
+        for (int i = 0; i < points.size(); i++)
+            for (int j = i + 1; j < points.size(); j++)
+                for (int k = j + 1; k < points.size(); k++)
+                    for (int l = k + 1; l < points.size(); l++) {
 
-        /// добавляем вс
-        for (Point point : points)
-            if (!crossed.contains(point))
-                single.add(point);
+                        // сохраняем точки
+                        Vector2d a1 = points.get(i).pos;
+                        Vector2d b1 = points.get(j).pos;
+                        // сохраняем точки
+                        Vector2d a2 = points.get(k).pos;
+                        Vector2d b2 = points.get(l).pos;
+
+
+                        Point c = new Line(a1, b1).cross(new Line(a2, b2));
+                        if (c!=null) {
+                            if (c.pos.length()<minPoint.pos.length(){
+
+                            }
+                        }
+                    }
+
 
         // задача решена
         solved = true;
