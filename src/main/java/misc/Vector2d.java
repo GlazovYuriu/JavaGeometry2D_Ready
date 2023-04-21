@@ -15,6 +15,7 @@ public class Vector2d {
      * y - координата вектора
      */
     public double y;
+    public double length;
 
     /**
      * Конструктор вектора

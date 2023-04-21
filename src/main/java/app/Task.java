@@ -258,6 +258,8 @@ public class Task {
         crossed.clear();
         single.clear();
 
+        Point minPoint = points.get(0);
+
         // перебираем пары точек
         for (int i = 0; i < points.size(); i++)
             for (int j = i + 1; j < points.size(); j++)
@@ -273,13 +275,16 @@ public class Task {
 
 
                         Point c = new Line(a1, b1).cross(new Line(a2, b2));
+                        System.out.println(c);
                         if (c!=null) {
-                            if (c.pos.length()<minPoint.pos.length(){
-
+                            if (c.pos.length()<minPoint.pos.length()){
+                                minPoint=c;
                             }
                         }
                     }
 
+
+       PanelLog.info("Ответ: "+minPoint);
 
         // задача решена
         solved = true;

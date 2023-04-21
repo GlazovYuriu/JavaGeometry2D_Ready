@@ -24,7 +24,7 @@ public class Line {
         this.posB = posB;
     }
 
-    Point cross(Line l) {
+   public Point cross(Line l) {
         return new Point(new Vector2d(0, 0));
     }
 

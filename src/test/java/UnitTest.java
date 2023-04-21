@@ -1,3 +1,4 @@
+import app.Line;
 import app.Point;
 import app.Task;
 import misc.CoordinateSystem2d;
@@ -13,101 +14,35 @@ import java.util.Set;
  */
 public class UnitTest {
 
-    /**
-     * Тест
-     *
-     * @param points        список точек
-     * @param crossedCoords мн-во пересечений
-     * @param singleCoords  мн-во разности
-     */
-    private static void test(ArrayList<Point> points, Set<Vector2d> crossedCoords, Set<Vector2d> singleCoords) {
-        Task task = new Task(new CoordinateSystem2d(10, 10, 20, 20), points);
-        task.solve();
-        // проверяем, что координат пересечения в два раза меньше, чем точек
-        assert crossedCoords.size() == task.getCrossed().size() / 2;
-        // проверяем, что координат разности столько же, сколько точек
-        assert singleCoords.size() == task.getSingle().size();
+    // тесты:
+    // 1) проверка расстояния от точки до центра координат
+    // 2) проверка высчета пересечения
 
-        // проверяем, что все координаты всех точек пересечения содержатся в множестве координат
-        for (Point p : task.getCrossed()) {
-            assert crossedCoords.contains(p.getPos());
-        }
-
-        // проверяем, что все координаты всех точек разности содержатся в множестве координат
-        for (Point p : task.getSingle()) {
-            assert singleCoords.contains(p.getPos());
-        }
-    }
-
-
-    /**
-     * Первый тест
-     */
     @Test
-    public void test1() {
-        ArrayList<Point> points = new ArrayList<>();
+    public void test() {
+        Vector2d a = new Vector2d(1, 0);
+        assert a.length() == 1;
 
-        points.add(new Point(new Vector2d(1, 1), Point.PointSet.FIRST_SET));
-        points.add(new Point(new Vector2d(-1, 1), Point.PointSet.FIRST_SET));
-        points.add(new Point(new Vector2d(-1, 1), Point.PointSet.SECOND_SET));
-        points.add(new Point(new Vector2d(2, 1), Point.PointSet.FIRST_SET));
-        points.add(new Point(new Vector2d(1, 2), Point.PointSet.SECOND_SET));
-        points.add(new Point(new Vector2d(1, 2), Point.PointSet.FIRST_SET));
 
-        Set<Vector2d> crossedCoords = new HashSet<>();
-        crossedCoords.add(new Vector2d(1, 2));
-        crossedCoords.add(new Vector2d(-1, 1));
-
-        Set<Vector2d> singleCoords = new HashSet<>();
-        singleCoords.add(new Vector2d(1, 1));
-        singleCoords.add(new Vector2d(2, 1));
-
-        test(points, crossedCoords, singleCoords);
+        Vector2d b = new Vector2d(3, 4);
     }
 
-    /**
-     * Второй тест
-     */
+
     @Test
     public void test2() {
-        ArrayList<Point> points = new ArrayList<>();
+        Vector2d a = new Vector2d(1, 0);
+        Vector2d b = new Vector2d(1, 0);
 
-        points.add(new Point(new Vector2d(1, 1), Point.PointSet.FIRST_SET));
-        points.add(new Point(new Vector2d(2, 1), Point.PointSet.FIRST_SET));
-        points.add(new Point(new Vector2d(2, 2), Point.PointSet.FIRST_SET));
-        points.add(new Point(new Vector2d(1, 2), Point.PointSet.FIRST_SET));
+        Line l = new Line(a, b);
 
-        Set<Vector2d> crossedCoords = new HashSet<>();
+        Vector2d a1 = new Vector2d(1, 0);
+        Vector2d b1 = new Vector2d(1, 0);
 
-        Set<Vector2d> singleCoords = new HashSet<>();
-        singleCoords.add(new Vector2d(1, 1));
-        singleCoords.add(new Vector2d(2, 1));
-        singleCoords.add(new Vector2d(2, 2));
-        singleCoords.add(new Vector2d(1, 2));
+        Line l1 = new Line(a, b);
 
-        test(points, crossedCoords, singleCoords);
+        Vector2d r = l.cross(l1).pos;
+        assert Math.abs(r.x - 0.4) < 0.001 && Math.abs(r.y - 0.8) < 0.001;
     }
 
-    /**
-     * Третий тест
-     */
-    @Test
-    public void test3() {
-        ArrayList<Point> points = new ArrayList<>();
 
-        points.add(new Point(new Vector2d(1, 1), Point.PointSet.FIRST_SET));
-        points.add(new Point(new Vector2d(2, 1), Point.PointSet.SECOND_SET));
-        points.add(new Point(new Vector2d(2, 2), Point.PointSet.SECOND_SET));
-        points.add(new Point(new Vector2d(1, 2), Point.PointSet.FIRST_SET));
-
-        Set<Vector2d> crossedCoords = new HashSet<>();
-
-        Set<Vector2d> singleCoords = new HashSet<>();
-        singleCoords.add(new Vector2d(1, 1));
-        singleCoords.add(new Vector2d(2, 1));
-        singleCoords.add(new Vector2d(2, 2));
-        singleCoords.add(new Vector2d(1, 2));
-
-        test(points, crossedCoords, singleCoords);
-    }
 }
