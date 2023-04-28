@@ -267,11 +267,11 @@ public class Task {
                     for (int l = k + 1; l < points.size(); l++) {
 
                         // сохраняем точки
-                        Vector2d a1 = points.get(i).pos;
-                        Vector2d b1 = points.get(j).pos;
+                         Vector2d a1 = points.get(i).pos;
+                         Vector2d b1 = points.get(j).pos;
                         // сохраняем точки
-                        Vector2d a2 = points.get(k).pos;
-                        Vector2d b2 = points.get(l).pos;
+                         Vector2d a2 = points.get(k).pos;
+                         Vector2d b2 = points.get(l).pos;
 
 
                         Point c = new Line(a1, b1).cross(new Line(a2, b2));

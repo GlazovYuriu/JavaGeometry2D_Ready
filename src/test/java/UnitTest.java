@@ -31,17 +31,18 @@ public class UnitTest {
     @Test
     public void test2() {
         Vector2d a = new Vector2d(1, 0);
-        Vector2d b = new Vector2d(1, 0);
+        Vector2d b = new Vector2d(0, 1);
 
         Line l = new Line(a, b);
 
-        Vector2d a1 = new Vector2d(1, 0);
-        Vector2d b1 = new Vector2d(1, 0);
+        Vector2d a1 = new Vector2d(1, 2);
+        Vector2d b1 = new Vector2d(1, 1);
 
-        Line l1 = new Line(a, b);
+        Line l1 = new Line(a1, b1);
 
-        Vector2d r = l.cross(l1).pos;
-        assert Math.abs(r.x - 0.4) < 0.001 && Math.abs(r.y - 0.8) < 0.001;
+        Point p = l.cross(l1);
+
+        assert Math.abs(p.pos.x - 0.4) < 0.001 && Math.abs(p.pos.y - 0.8) < 0.001;
     }
 
 
