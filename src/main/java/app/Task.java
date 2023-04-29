@@ -125,26 +125,21 @@ public class Task {
 
             // задаём красный цвет
             paint.setColor(Misc.getColor(200, 0, 255, 200));
-            // опорные точки линии
-            Vector2i pointA = new Vector2i(200, 200);
-            Vector2i pointB = new Vector2i(300, 400);
-            // вектор, ведущий из точки A в точку B
-            Vector2i delta = Vector2i.subtract(pointA, pointB);
-            // получаем максимальную длину отрезка на экране, как длину диагонали экрана
-            int maxDistance = (int) windowCS.getSize().length();
+
             // получаем новые точки для рисования, которые гарантируют, что линия
             // будет нарисована до границ экрана
-            Vector2i renderPointA = Vector2i.sum(pointA, Vector2i.mult(delta, maxDistance));
-            Vector2i renderPointB = Vector2i.sum(pointA, Vector2i.mult(delta, -maxDistance));
-            // рисуем линию
-            canvas.drawLine(renderPointA.x, renderPointA.y, renderPointB.x, renderPointB.y, paint);
 
 
-            // задаём красный цвет
-            paint.setColor(Misc.getColor(200, 255, 0, 0));
-            // рисуем исходные точки
-            canvas.drawRRect(RRect.makeXYWH(pointA.x - 4, pointA.y - 4, 8, 8, 4), paint);
-            canvas.drawRRect(RRect.makeXYWH(pointB.x - 4, pointB.y - 4, 8, 8, 4), paint);
+            // рисуем ответ (две линии)
+            if (ans1 != null)
+                ans1.paint(canvas, windowCS, ownCS);
+
+            System.out.println(ans1 + " " + ans2);
+
+            // рисуем ответ (две линии)
+            if (ans2 != null)
+                ans2.paint(canvas, windowCS, ownCS);
+
 
         }
         canvas.restore();
@@ -250,6 +245,9 @@ public class Task {
         solved = false;
     }
 
+    Line ans1;
+    Line ans2;
+
     /**
      * Решить задачу
      */
@@ -267,24 +265,27 @@ public class Task {
                     for (int l = k + 1; l < points.size(); l++) {
 
                         // сохраняем точки
-                         Vector2d a1 = points.get(i).pos;
-                         Vector2d b1 = points.get(j).pos;
+                        Vector2d a1 = points.get(i).pos;
+                        Vector2d b1 = points.get(j).pos;
                         // сохраняем точки
-                         Vector2d a2 = points.get(k).pos;
-                         Vector2d b2 = points.get(l).pos;
+                        Vector2d a2 = points.get(k).pos;
+                        Vector2d b2 = points.get(l).pos;
 
 
                         Point c = new Line(a1, b1).cross(new Line(a2, b2));
                         System.out.println(c);
-                        if (c!=null) {
-                            if (c.pos.length()<minPoint.pos.length()){
-                                minPoint=c;
+                        if (c != null) {
+                            if (c.pos.length() < minPoint.pos.length()) {
+                                minPoint = c;
+
+                                ans1 = new Line(a1, b1);
+                                ans2 = new Line(a2, b2);
                             }
                         }
                     }
 
 
-       PanelLog.info("Ответ: "+minPoint);
+        PanelLog.info("Ответ: " + minPoint);
 
         // задача решена
         solved = true;
@@ -333,6 +334,9 @@ public class Task {
      */
     public void cancel() {
         solved = false;
+
+        ans1 = null;
+        ans2 = null;
     }
 
     /**

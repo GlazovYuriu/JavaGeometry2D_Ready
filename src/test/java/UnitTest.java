@@ -31,18 +31,67 @@ public class UnitTest {
     @Test
     public void test2() {
         Vector2d a = new Vector2d(1, 0);
-        Vector2d b = new Vector2d(0, 1);
+        Vector2d b = new Vector2d(1, 2);
 
         Line l = new Line(a, b);
 
-        Vector2d a1 = new Vector2d(1, 2);
-        Vector2d b1 = new Vector2d(1, 1);
+        Vector2d a1 = new Vector2d(2, 0);
+        Vector2d b1 = new Vector2d(2, 3);
 
         Line l1 = new Line(a1, b1);
-
         Point p = l.cross(l1);
 
-        assert Math.abs(p.pos.x - 0.4) < 0.001 && Math.abs(p.pos.y - 0.8) < 0.001;
+        assert  p==null;
+    }
+
+
+    @Test
+    public void test3() {
+
+        Vector2d a = new Vector2d(0, 2);
+        Vector2d b = new Vector2d(2, 4);
+
+        Line l = new Line(a, b);
+
+        Vector2d a1= new Vector2d(-4, 6);
+        Vector2d b1 = new Vector2d(2, 0);
+
+        Line l1 = new Line(a1, b1);
+        Point p = l.cross(l1);
+        assert  p.pos.equals(new Vector2d(0, 2));
+
+    }
+    @Test
+    public void test4() {
+        Vector2d a = new Vector2d(1, 1);
+        Vector2d b = new Vector2d(3, 3);
+
+        Line l = new Line(a, b);
+
+        Vector2d a1= new Vector2d(2, -2);
+        Vector2d b1 = new Vector2d(-2, 2);
+
+        Line l1 = new Line(a1, b1);
+        Point p = l.cross(l1);
+        assert  p.pos.equals(new Vector2d(0, 0));
+}
+
+    @Test
+    public void test5() {
+        Vector2d a = new Vector2d(5, 0);
+        Vector2d b = new Vector2d(0, 5);
+
+        Line l = new Line(a, b);
+
+        Vector2d a1= new Vector2d(2, -1);
+        Vector2d b1 = new Vector2d(-2, 11);
+
+        Line l1 = new Line(a1, b1);
+        Point p = l.cross(l1);
+
+
+
+        assert  p.pos.equals(new Vector2d(0, 5));
     }
 
 
