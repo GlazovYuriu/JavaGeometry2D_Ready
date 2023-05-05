@@ -91,7 +91,34 @@ public class UnitTest {
 
 
 
+
         assert  p.pos.equals(new Vector2d(0, 5));
+    }
+    @Test
+    public void test6() {
+        Vector2d a = new Vector2d(1, 1);
+        Vector2d b = new Vector2d(3, 3);
+
+        Line l = new Line(a, b);
+
+        Vector2d a1= new Vector2d(2, -2);
+        Vector2d b1 = new Vector2d(-2, 2);
+
+        Line l1 = new Line(a1, b1);
+        Vector2d a2 = new Vector2d(2, 8);
+        Vector2d b2 = new Vector2d(12, 4);
+
+        Line l2 = new Line(a, b);
+
+        Point p = l.cross(l1);
+        Point p2 = l.cross(l2);
+        Point p3 = l1.cross(l2);
+
+
+
+
+
+        assert  p.pos.equals(new Vector2d(0, 0));
     }
 
 
