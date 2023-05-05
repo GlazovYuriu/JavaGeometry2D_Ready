@@ -132,13 +132,27 @@ public class Task {
 
             // рисуем ответ (две линии)
             if (ans1 != null)
-                ans1.paint(canvas, windowCS, ownCS);
+                ans1.paint(canvas, windowCS, ownCS, paint);
 
             System.out.println(ans1 + " " + ans2);
 
             // рисуем ответ (две линии)
             if (ans2 != null)
-                ans2.paint(canvas, windowCS, ownCS);
+                ans2.paint(canvas, windowCS, ownCS, paint);
+
+            // рисуем ответ (две линии)
+            if (minPoint != null) {
+
+                paint.setColor(Misc.getColor(200, 200, 100, 100));
+
+                // опорные точки линии
+                Vector2i pointA = windowCS.getCoords(new Vector2d(0, 0), ownCS);
+                Vector2i pointB = windowCS.getCoords(new Vector2d(-minPoint.pos.x, minPoint.pos.y), ownCS);
+
+                // рисуем линию
+                canvas.drawLine(pointA.x, pointA.y, pointB.x, pointB.y, paint);
+
+            }
 
 
         }
@@ -248,6 +262,10 @@ public class Task {
     Line ans1;
     Line ans2;
 
+    Point cr;
+
+    Point minPoint;
+
     /**
      * Решить задачу
      */
@@ -256,7 +274,7 @@ public class Task {
         crossed.clear();
         single.clear();
 
-        Point minPoint = points.get(0);
+        minPoint = points.get(0);
 
         // перебираем пары точек
         for (int i = 0; i < points.size(); i++)

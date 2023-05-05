@@ -66,8 +66,7 @@ public class Line {
     }
 
 
-    public void paint(Canvas canvas, CoordinateSystem2i windowCS, CoordinateSystem2d ownCS) {
-        try (Paint p = new Paint()) {
+    public void paint(Canvas canvas, CoordinateSystem2i windowCS, CoordinateSystem2d ownCS,Paint p ) {
             // опорные точки линии
             Vector2i pointA = windowCS.getCoords(posA, ownCS);
             Vector2i pointB = windowCS.getCoords(posB, ownCS);
@@ -86,7 +85,6 @@ public class Line {
 
             canvas.drawRect(Rect.makeXYWH(pointA.x - 2, pointA.y - 2, 4, 4), p);
             canvas.drawRect(Rect.makeXYWH(pointB.x - 2, pointB.y - 2, 4, 4), p);
-        }
 
         /*
             // рисуем ответ (две линии)
